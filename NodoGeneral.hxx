@@ -65,19 +65,44 @@ void NodoGeneral<T>::limpiarLista()
 }
 
 
+//indica si un nodo es hoja
+template <typename T>
+bool NodoGeneral<T>::esHoja()
+{
+    return p_hijos == 0;
+}
+
+
 //calculo de la altura del subarbol con raiz en nodo (esta es mi propuesta)
 template <typename T>
-unsigned int NodoGeneral<T>::altura()
+int NodoGeneral<T>::N_altura()
 {
-    if(p_hijos.size() == 0)
+    if(esHoja())
         return 0;
     else
     {
-        max = 0;
+        int max = 0;
         for(auto it = p_hijos.begin(); it != p_hijos.end(); it++)
-            if((*it)->altura() > max)
-                max = (*it)->altura();
+            if((*it)->N_altura() > max)
+                max = (*it)->N_altura();
         return 1 + max;
+    }
+}
+
+//esta es mi implementacion de tamano 
+//calcula el numero de nodos en el subarbol con el nodo actual como raiz
+template <typename T>
+unsigned int NodoGeneral<T>::N_tamano()
+{
+    if(esHoja())
+        return 1;
+    else
+    {
+        int numNodos = 0;
+        list<NodoGeneral<T>*>::iterator it;
+        for(it = p_hijos.begin(); it != p_hijos.end(); it++)
+            numNodos += (*it)->N_tamano();
+        return numNodos + 1;
     }
 }
 
@@ -88,10 +113,12 @@ template <typename T>
 void NodoGeneral<T>::agregarHijo(T& Dato) 
 {
     NodoGeneral<T>* nuevo = new NodoGeneral<T>;
-    nuevo->FijarDato(Dato);
+    nuevo->fijarDato(Dato);
     p_hijos.push_back(nuevo);
 }
 
+
+//si es nodo hoja el iterador it donde queda?
 //elimina un hijo (si lo encuentra)
 template <typename T>
 bool NodoGeneral<T>::eliminarHijo(T& Dato)
@@ -116,4 +143,140 @@ bool NodoGeneral<T>::eliminarHijo(T& Dato)
         return true;
     }
     return false;
+}
+
+
+//inserta un nuevo dato dado, en algun dato padre.
+template <typename T>
+bool NodoGeneral<T>::N_insertarNodo(T datoPadre, T nuevoDato)
+{
+    //agregamos el nuevo dato si el nodo en el que estamos es el padre que deseamos
+    if(dato == datoPadre)
+    {
+        agregarHijo(nuevoDato);
+        return true;
+    }
+    //revisamos a ver si en los hijos esta el padre que buscamos
+    else
+    {
+        list<NodoGeneral<T>*>::iterator it;
+
+        //si en algun momento se puede insertar, lo insertamos
+        for(it = p_hijos.begin(); it != p_hijos.end(); it++)
+            if((*it)->N_insertarNodo(datoPadre,nuevoDato))
+                return true;
+        
+        return false;
+    }
+}
+
+
+//eliminamos el nodo haciendo la busqueda desde los hijos del nodo actual
+template <typename T>
+bool NodoGeneral<T>::N_eliminarNodo(T datox)
+{
+    if(eliminarHijo(datox))
+        return true;
+    else
+    {
+        list<NodoGeneral<T>*>::iterator it;
+
+        for(it = p_hijos.begin(); it != p_hijos.end(); it++)
+            if((*it)->eliminarHijo(datox))
+                return true;
+
+        return false;
+    }
+}
+
+//al parecer buscar solo me dice si si esta o no en este subarbol
+//como podria obtener ademas de el bool de si esta o no
+//una referencia al dato encontrado?
+
+template <typename T>
+bool NodoGeneral<T>::N_buscarNodo(T datob)
+{
+    if(dato == datob)
+        return true;
+    else
+    {
+        list<NodoGeneral<T>*>::iterator it;
+
+        for(it = p_hijos.begin(); it != p_hijos.end(); it++)
+            if((*it)->N_buscarNodo(datox))
+                return true;
+    
+        return false;
+    }
+}
+
+
+//antes tenia las anteriores tres funciones de esta forma:
+/*
+
+template <typename T>
+bool NodoGeneral<T>::N_buscarNodo(T datob)
+{
+    if(dato == datob)
+        return true;
+    else
+    {
+        list<NodoGeneral<T>*>::iterator it;
+        for(it = p_hijos.begin(); it != p_hijos.end(); it++)
+        {
+            if(!((*it)->N_buscarNodo(datox)))
+                continue;
+        }
+        return false;
+    }
+
+}
+*/
+
+
+//---------------------------------------------------------------------------------------------------------------
+//nota: las siguientes funciones podrian  ser mejor de tipo list<NodoGeneral<T>> almacenando los datos en preorden
+
+//impresion del preorden del subarbol cuya raiz es el nodo actual
+template <typename T>
+void NodoGeneral<T>::N_preOrden()
+{
+    cout<<obtenerDato()<<" ";
+    for(auto it = p_hijos.begin(); it != p_hijos.end(); it++)
+        (*it)->N_preOrden();
+}
+
+//impresion en posorden del subarbol cuya raiz es el nodo actual
+template <typename T>
+void NodoGeneral<T>::N_posOrden()
+{
+    for(auto it = p_hijos.begin(); it != p_hijos.end(); it++)
+        (*it)->N_posOrden();
+    cout<<obtenerDato()<<" ";
+}
+
+//impresion por niveles del subarbol cuya raiz es el nodo actual
+template<typename T>
+void NodoGeneral<T>::N_nivelOrden()
+{
+    //creamos una queue con apuntadores a nodos
+    queue<NodoGeneral<T>*> fila;
+
+    //metemos el apuntador al nodo actual
+    fila.push(this);
+    
+    //el ciclo termina cuando ya no haya nadie en la fila
+    while(!fila.empty())
+    {
+        NodoGeneral<T>* actual = fila.front();
+        //imprimimos el dato del nodo actual
+        cout<<actual->obtenerDato();
+        
+        //agregamos los hijos del nodo actual a la fila (como apuntadores)
+        list<NodoGeneral<T>*>::iterator it;
+        for(it = actual->(p_hijos.begin()); it != actual->(p_hijos.end()); it++)
+            fila.push(*it);
+        fila.pop();
+        //eliminamos el nodo (como apuntador) con el que estabamos trabajando
+    }
 }

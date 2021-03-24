@@ -4,9 +4,8 @@
 template <typename T>
 struct ArbolGeneral
 {
-    protected:
     //nodo raiz
-        NodoGeneral<T>* raiz;
+    NodoGeneral<T>* raiz;
 
     //Constructores
     ArbolGeneral();
@@ -21,78 +20,16 @@ struct ArbolGeneral
     NodoGeneral<T>* obtenerRaiz();
     void fijarRaiz(NodoGeneral<T>* nraiz);
 
-    bool insertarNodo(T padre, T n);
-    bool eliminarNodo(T n);
-    bool buscar(T n);
+    bool A_insertarNodo(T datoPadre, T datoNuevo);
+    bool A_eliminarNodo(T datox);
+    bool A_buscarNodo(T datob);
 
-    //esta la cambie...
-    unsigned int altura();
+    int A_altura(); //inicialmente estaba como unsigned pero si era -1 paila
+    unsigned int A_tamano();
 
-    unsigned int tamano();
-
-    void preOrden();
-    void posOrden();
-    void nivelOrden();
+    void A_preOrden();
+    void A_posOrden();
+    void A_nivelOrden();
 };
 
-//deja el apuntador raiz en nulo
-template <typename T>
-ArbolGeneral<T>::ArbolGeneral()
-{
-    raiz = NULL; //recordar #define NULL 0
-}
-
-//crea un arbol con solo su raiz
-template <typename T>
-ArbolGeneral<T>::ArbolGeneral(T& dato)
-{
-    NodoGeneral<T>* nuevo = new NodoGeneral<T>;
-    nuevo -> fijarDato(dato);
-    raiz = nuevo;
-}
-
-//destruccion del arbol
-template <typename T>
-ArbolGeneral<T>::~ArbolGeneral()
-{
-    delete raiz; //?????????? aca tampoco entiendo T_T o sea borra recursivamente o que esta haciendo?
-    raiz = NULL;
-}
-
-//retorna si el arbol es vacio o no
-template <typename T>
-bool ArbolGeneral<T>::esVacio()
-{
-    return raiz == NULL;
-}
-
-//devuelve el apuntador raiz
-template <typename T>
-NodoGeneral<T>* ArbolGeneral<T>::obtenerRaiz()
-{
-    return raiz;
-}
-
-//cambia la raiz del arbol
-template <typename T>
-void ArbolGeneral<T>::fijarRaiz(NodoGeneral<T>* nraiz)
-{
-    raiz = nraiz;
-}
-
-
-/*  FALTAN ESTAS OPERACIONES
-    bool insertarNodo(T padre, T n);
-    bool eliminarNodo(T n);
-    bool buscar(T n);
-*/
-
-//esta es mi propuesta de altura sobre un arbol
-template <typename T>
-unsigned int ArbolGeneral<T>::altura()
-{
-    if(esVacio())
-        return -1;
-    else
-        return raiz->altura();
-}
+#include "ArbolGeneral.hxx"
