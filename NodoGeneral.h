@@ -10,17 +10,16 @@ struct NodoGeneral
 {
     //datos
     T dato;
-    list<NodoGeneral<T>*> p_hijos; //NodoGeneral<T>* sig seria como lo haciamos en la lista, un apuntador a un dato;
-    //de tipo NodoGeneral aqui es un conjunto de apuntadores a datos de tipo NodoGeneral y por eso se hace así
-    
-    //constructor ?????????????????????? (VER HOJITA PARA PREGUNTAR)
+    list<NodoGeneral<T>*> p_hijos;
+
+    //constructor ??
     NodoGeneral();
     
-    //destructor ?????????????????????????????'
+    //destructor ??
     ~NodoGeneral();
     
     //operaciones
-    T& obtenerDato(); //?????? T&?? que significa devolver una referencia? que extraño...
+    T& obtenerDato(); //que significa devolver una referencia?
     void fijarDato(T& nuevoDato);
     void limpiarLista();
 

@@ -1,15 +1,26 @@
 #include "NodoGeneral.h"
 
+/*
+???????
+cuando se hace delete a un apuntador que pasa?
+no entendi la diferencia entre constructor y destructor, en que es diferente
+borrar los *it en el destructor, al hacer p_hijos.clear() no se estan borrando ya?
+no entiendo (para que hacemos eso en el constructor? no es equivalente dejarlo vacio?)
+*/
 
-//no lo entiendo (para que hacemos eso en el constructor? no es equivalente dejarlo vacio y ya?)
+//constructor
 template <typename T>
 NodoGeneral<T>::NodoGeneral()
 {
     p_hijos.clear();
 }
 
-//no entiendo tampoco bien el destructor... que significa bien ese delete (aca si me parece que tiene sentido el clear de la lista)
-//sin embargo por que entonces el constructor tambien tiene ese p_hijos.clear()?)
+/*
+no entiendo tampoco bien el destructor... que significa bien ese delete (aca si me parece que tiene sentido el clear de la lista)
+sin embargo por que entonces el constructor tambien tiene ese p_hijos.clear()?)
+*/
+
+//destructor
 template<typename T>
 NodoGeneral<T>::~NodoGeneral()
 {
@@ -18,8 +29,12 @@ NodoGeneral<T>::~NodoGeneral()
     p_hijos.clear();
 }
 
-//????????????????????????
-//funcion que retorna una referencia (alias) al dato que tenemos en NodoGeneral T& ref = dato ?
+
+/*
+funcion que retorna una referencia (alias) al dato que tenemos en NodoGeneral T& ref = dato?
+*/
+
+//obtiene el dato del nodo actual
 template <typename T>
 T& NodoGeneral<T>::obtenerDato()
 {
@@ -28,8 +43,14 @@ T& NodoGeneral<T>::obtenerDato()
     return dato;
 }
 
-/*????????????????'
-Asi es como yo la haria, devolver el dato directamente, no entiendo muy bien porque la profe lo hace como referencia..
+/*
+????????????????
+Asi es como yo la haria, devolver el dato directamente, no entiendo muy bien porque 
+la profe lo hace como referencia..
+
+En conclusion en que caso se usan referencias?? Hay de pronto varias funciones en 
+las que esto se podria hacer (por ejemplo en buscar, insertar, eliminar de arbol?)
+
 template <typename T>
 T NodoGeneral<T>::obtenerDato()
 {
@@ -49,6 +70,11 @@ T* NodoGeneral<T>::obtenerDato()
 }
 */
 
+
+/*
+uso dato u obtenerDato() ?? (this->ObtenerDato())
+*/
+
 //cambia el dato de un NodoGeneral
 template <typename T>
 void NodoGeneral<T>::fijarDato(T& NuevoDato) //??????supongo que la referencia se hace para no copiar y pegar el nuevodato que se está enviando
@@ -56,6 +82,10 @@ void NodoGeneral<T>::fijarDato(T& NuevoDato) //??????supongo que la referencia s
     dato = NuevoDato;
 }
 
+
+/*
+Aca se esta llamando al destructor?
+*/
 
 //elimina los hijos de un NodoGeneral
 template <typename T>
@@ -73,7 +103,11 @@ bool NodoGeneral<T>::esHoja()
 }
 
 
-//calculo de la altura del subarbol con raiz en nodo (esta es mi propuesta)
+/*
+    revisar
+*/
+
+//calculo de la altura del subarbol con raiz en nodo en nodo actual
 template <typename T>
 int NodoGeneral<T>::N_altura()
 {
@@ -89,7 +123,10 @@ int NodoGeneral<T>::N_altura()
     }
 }
 
-//esta es mi implementacion de tamano 
+/*
+    Implementacion de tamano, revisar
+*/
+
 //calcula el numero de nodos en el subarbol con el nodo actual como raiz
 template <typename T>
 unsigned int NodoGeneral<T>::N_tamano()
@@ -118,7 +155,10 @@ void NodoGeneral<T>::agregarHijo(T& Dato)
 }
 
 
-//si es nodo hoja el iterador it donde queda?
+/*
+    si es nodo hoja el iterador it donde queda?
+*/
+
 //elimina un hijo (si lo encuentra)
 template <typename T>
 bool NodoGeneral<T>::eliminarHijo(T& Dato)
@@ -138,15 +178,19 @@ bool NodoGeneral<T>::eliminarHijo(T& Dato)
     //si lo encontramos, eliminarlo
     if(it != p_hijos.end())
     {
-        delete *it; //??????????????ella dice que aqui el destructor se encarga de todo pero aun no entiendo bien eso...
+        delete *it; //?????la profe dice que el destructor se encarga de todo pero aun no entiendo bien eso...
         p_hijos.erase(it);
         return true;
     }
     return false;
 }
 
+/*
+    revisar las siguientes tres funciones, al final tengo una idea que
+    use antes pero creo que no servia..
+*/
 
-//inserta un nuevo dato dado, en algun dato padre.
+//inserta un nuevo dato dado, en algun dato padre (si lo encuentra)
 template <typename T>
 bool NodoGeneral<T>::N_insertarNodo(T datoPadre, T nuevoDato)
 {
@@ -189,10 +233,13 @@ bool NodoGeneral<T>::N_eliminarNodo(T datox)
     }
 }
 
-//al parecer buscar solo me dice si si esta o no en este subarbol
-//como podria obtener ademas de el bool de si esta o no
-//una referencia al dato encontrado?
+/*
+al parecer buscar solo me dice si si esta o no en este subarbol
+como podria obtener ademas de el bool de si esta o no
+una referencia al dato encontrado?
+*/
 
+//busca un nodo a partir del subarbol con raiz nodo actual
 template <typename T>
 bool NodoGeneral<T>::N_buscarNodo(T datob)
 {
@@ -235,7 +282,8 @@ bool NodoGeneral<T>::N_buscarNodo(T datob)
 
 
 //---------------------------------------------------------------------------------------------------------------
-//nota: las siguientes funciones podrian  ser mejor de tipo list<NodoGeneral<T>> almacenando los datos en preorden
+//nota: las siguientes funciones podrian  ser mejor de tipo 
+//list<NodoGeneral<T>> almacenando los datos en preorden
 
 //impresion del preorden del subarbol cuya raiz es el nodo actual
 template <typename T>
@@ -254,6 +302,11 @@ void NodoGeneral<T>::N_posOrden()
         (*it)->N_posOrden();
     cout<<obtenerDato()<<" ";
 }
+
+
+/*
+    revisar (fue dura!)
+*/
 
 //impresion por niveles del subarbol cuya raiz es el nodo actual
 template<typename T>
