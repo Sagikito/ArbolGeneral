@@ -28,7 +28,7 @@ ArbolGeneral<T>::~ArbolGeneral()
 template <typename T>
 bool ArbolGeneral<T>::esVacio()
 {
-    return raiz == NULL;
+    return raiz == NULL;    
 }
 
 //devuelve el apuntador raiz
