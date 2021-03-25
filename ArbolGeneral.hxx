@@ -69,11 +69,11 @@ bool ArbolGeneral<T>::A_eliminarNodo(T datox)
     else if(raiz->dato == datox)
     {
        //aca se llama al destructor??????
-       ~ArbolGeneral();
+       this->~ArbolGeneral();
        return true;
     }
     else
-        return raiz->N_eliminarNodo(T datox)
+        return raiz->N_eliminarNodo(datox);
 }
 
 //busca un datob dentro del arbol
@@ -114,7 +114,7 @@ void ArbolGeneral<T>::A_preOrden()
     if(esVacio())
         cout<<"El arbol esta vacio!"<<endl;
     else
-        raiz->N_preorden();
+        raiz->N_preOrden();
 }
 
 //imprime en posorden los nodos del arbol

@@ -3,12 +3,11 @@
 int main()
 {
     ArbolGeneral<int> arbol;
-    short opcion; cin>>opcion;
+    short opcion;
 
     do
     {
-        cout<<"Escoja la opcion que desee"<<endl;
-        
+		cout<<"\nOpciones"<<endl;
         //cout<<"1. Crear arbol vacio"<<endl;
         //cout<<"2. Crear arbol con un dato"<<endl;
         cout<<"3. Destruir el Arbol"<<endl;
@@ -22,7 +21,8 @@ int main()
         cout<<"11. Imprimir arbol en posOrden"<<endl;
         cout<<"12. Imprimir arbol por niveles"<<endl;
         cout<<"13. Salir"<<endl;
-
+		cout<<"Escoja la opcion que desee: ";
+		cin>>opcion;
         switch (opcion)
         {
         //crear Arbol Vacio
@@ -143,10 +143,10 @@ int main()
 
         default:
         {
-            cout<<"Saliendo del programa..."<<endl;
+            cout<<"Ha salido exitosamente"<<endl;
             break;
         }
         }
-
+		
     }while(opcion > -1 && opcion < 13);
 }

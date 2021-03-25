@@ -24,8 +24,8 @@ sin embargo por que entonces el constructor tambien tiene ese p_hijos.clear()?)
 template<typename T>
 NodoGeneral<T>::~NodoGeneral()
 {
-    for(auto it = p_hijos.begin(), it != p_hijos.end(); it++)
-        delete *it
+    for(auto it = p_hijos.begin(); it != p_hijos.end(); it++)
+        delete *it;
     p_hijos.clear();
 }
 
@@ -99,7 +99,7 @@ void NodoGeneral<T>::limpiarLista()
 template <typename T>
 bool NodoGeneral<T>::esHoja()
 {
-    return p_hijos == 0;
+    return p_hijos.size() == 0;
 }
 
 
@@ -136,8 +136,7 @@ unsigned int NodoGeneral<T>::N_tamano()
     else
     {
         int numNodos = 0;
-        list<NodoGeneral<T>*>::iterator it;
-        for(it = p_hijos.begin(); it != p_hijos.end(); it++)
+        for(auto it = p_hijos.begin(); it != p_hijos.end(); it++)
             numNodos += (*it)->N_tamano();
         return numNodos + 1;
     }
@@ -165,9 +164,8 @@ bool NodoGeneral<T>::eliminarHijo(T& Dato)
 {
     
     //buscar si existe un nodo con el Dato dado
-    list<NodoGeneral<T>*>::iterator it;
     NodoGeneral<T>* aux;
-
+	auto it = p_hijos.begin();
     for(it = p_hijos.begin(); it != p_hijos.end(); it++)
     {
         aux = *it; //el contenido de it es un apuntador!
@@ -203,10 +201,8 @@ bool NodoGeneral<T>::N_insertarNodo(T datoPadre, T nuevoDato)
     //revisamos a ver si en los hijos esta el padre que buscamos
     else
     {
-        list<NodoGeneral<T>*>::iterator it;
-
         //si en algun momento se puede insertar, lo insertamos
-        for(it = p_hijos.begin(); it != p_hijos.end(); it++)
+        for(auto it = p_hijos.begin(); it != p_hijos.end(); it++)
             if((*it)->N_insertarNodo(datoPadre,nuevoDato))
                 return true;
         
@@ -223,9 +219,7 @@ bool NodoGeneral<T>::N_eliminarNodo(T datox)
         return true;
     else
     {
-        list<NodoGeneral<T>*>::iterator it;
-
-        for(it = p_hijos.begin(); it != p_hijos.end(); it++)
+        for(auto it = p_hijos.begin(); it != p_hijos.end(); it++)
             if((*it)->eliminarHijo(datox))
                 return true;
 
@@ -247,10 +241,8 @@ bool NodoGeneral<T>::N_buscarNodo(T datob)
         return true;
     else
     {
-        list<NodoGeneral<T>*>::iterator it;
-
-        for(it = p_hijos.begin(); it != p_hijos.end(); it++)
-            if((*it)->N_buscarNodo(datox))
+        for(auto it = p_hijos.begin(); it != p_hijos.end(); it++)
+            if((*it)->N_buscarNodo(datob))
                 return true;
     
         return false;
@@ -325,9 +317,8 @@ void NodoGeneral<T>::N_nivelOrden()
         //imprimimos el dato del nodo actual
         cout<<actual->obtenerDato();
         
-        //agregamos los hijos del nodo actual a la fila (como apuntadores)
-        list<NodoGeneral<T>*>::iterator it;
-        for(it = actual->(p_hijos.begin()); it != actual->(p_hijos.end()); it++)
+        //agregamos los hijos del nodo actual a la fila (como apuntadores);
+        for(auto it = actual->p_hijos.begin(); it != actual->p_hijos.end(); it++)
             fila.push(*it);
         fila.pop();
         //eliminamos el nodo (como apuntador) con el que estabamos trabajando
