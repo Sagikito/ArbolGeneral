@@ -50,9 +50,12 @@ template <typename T>
 bool ArbolGeneral<T>::A_insertarNodo(T datoPadre, T nuevoDato)
 {
     //si el arbol es vacio llamo al constructor????????
+    //respuesta: no, no se llama al constructor
     if(esVacio())
     {
-        ArbolGeneral(nuevoDato);
+        NodoGeneral<T>* p = new NodoGeneral<T>;
+        p->fijarDato(nuevoDato);
+        raiz = p;
         return true;
     }
     //si no es vacio, llamamos a la funcion N_insertarNodo sobre la raiz
@@ -68,8 +71,8 @@ bool ArbolGeneral<T>::A_eliminarNodo(T datox)
         return false;
     else if(raiz->dato == datox)
     {
-       //aca se llama al destructor??????
-       this->~ArbolGeneral();
+       delete raiz;
+       raiz = NULL;
        return true;
     }
     else

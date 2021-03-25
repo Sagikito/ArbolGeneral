@@ -38,7 +38,7 @@ int main()
             int dato;
             cout<<"Ingrese el dato: "<<endl;
             cin>>dato;
-            arbol = arbol(dato<<endl;
+            arbol = arbol(dato)<<endl;
             cout<<"Arbol Creado con el dato!"<<endl;
             break;
         }

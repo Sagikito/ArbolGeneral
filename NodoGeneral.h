@@ -11,7 +11,7 @@ struct NodoGeneral
 {
     //datos
     T dato;
-    list<NodoGeneral<T>*> p_hijos;
+    list<NodoGeneral<T>*> p_hijos; //desc
 
     //constructor ??
     NodoGeneral();
@@ -20,7 +20,7 @@ struct NodoGeneral
     ~NodoGeneral();
     
     //operaciones
-    T& obtenerDato(); //que significa devolver una referencia?
+    T obtenerDato(); //que significa devolver una referencia?
     void fijarDato(T& nuevoDato);
     void limpiarLista();
 
