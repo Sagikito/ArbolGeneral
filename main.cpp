@@ -4,6 +4,7 @@ int main()
 {
     ArbolGeneral<int> arbol;
     short opcion;
+	char pausa;
 
     do
     {
@@ -147,6 +148,8 @@ int main()
             break;
         }
         }
-		
+		cout<<"Apachurre cualquier tecla para continuar: ";
+		cin>>pausa;
+		system("clear");
     }while(opcion > -1 && opcion < 13);
 }
